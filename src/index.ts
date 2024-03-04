@@ -31,4 +31,4 @@ async function register(): Promise<void> {
   }
 }
 
-register();
+// register();
