@@ -1,10 +1,13 @@
 // type def of users 
 
 
-export const typeDefs = `
+ const typeDefs = `
   type User {
     username: String,
     password: String
+  }
+  type Notes {
+    id: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -13,6 +16,9 @@ export const typeDefs = `
 
   type Query {
     users: [User]
+    notes: [Notes]
   }
+
+
 
 `
