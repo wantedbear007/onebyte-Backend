@@ -10,9 +10,8 @@ async function main() {
       name: "Bhanupratap singh",
       password: "simplepassword",
       username: "wantedbear007",
-      
-    }
-  })
+    },
+  });
 }
 
 main()
