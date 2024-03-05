@@ -10,7 +10,7 @@ import mutations from "./schema/mutations";
 import queries from "./schema/queries";
 // const typeDefs = readFileSync('./src/graphql/schema/mutations.graphql', { encoding: 'utf-8' });
 
-const schema = `${types} ${mutations} ${queries}`;
+const schema: string = `${types} ${mutations} ${queries}`;
 
 const resolvers = {
   Query: queryResolvers,
@@ -29,4 +29,3 @@ export async function startGraphQL(): Promise<void> {
 
   console.log(url);
 }
-

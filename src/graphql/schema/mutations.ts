@@ -1,4 +1,9 @@
 const mutations = `
+type userRegistrationResponse {
+  statusCode: Int
+  message: String
+}
+
 type Mutation {
   getName(name: String!): String
   registerUser(
@@ -8,7 +13,7 @@ type Mutation {
     bio: String!
     profileUrl: String
     password: String!
-  ): String
+  ): userRegistrationResponse
 }
 
 `;
