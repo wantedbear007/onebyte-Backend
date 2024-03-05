@@ -1,12 +1,10 @@
-import { isErrored } from "stream";
 import InputValidation from "../../middleware/inputValidation";
 import { userRegistrationModel } from "../models/userRegistrationModel";
-import * as zodTypeCheck from "zod";
-import { ApolloError, ValidationError } from "apollo-server-core";
+import { ValidationError } from "apollo-server-core";
 import { responseCodes } from "../../utils/statusCode";
+import Hashing from "../../services/passwordHashing";
 
 // user registration error
-
 export interface userRegistrationResponse {
   message: string;
   statusCode?: number;
@@ -16,6 +14,7 @@ export const mutationsResolvers = {
   getName: (parent: any, args: { name: String }, context: any, info: any) => {
     return "hello " + args.name;
   },
+
   registerUser: async (
     parent: any,
     args: userRegistrationModel,
@@ -23,6 +22,10 @@ export const mutationsResolvers = {
     info: any
   ) => {
     const { username, bio, email, name, password } = args;
+    // response
+    let response: userRegistrationResponse = {
+      message: "Registration was successful",
+    };
 
     try {
       if (!(username || bio || email || name || password)) {
@@ -34,27 +37,35 @@ export const mutationsResolvers = {
         throw new ValidationError("data format is invalid");
       }
       console.log(username, bio, email, name, password);
+      const hashedPass: string | null = await Hashing.hashPassword(password);
 
-      const response: userRegistrationResponse = {
-        message: "request was successful",
-        statusCode: responseCodes.userCreated,
-      };
+      if (hashedPass == null) {
+        throw new Error("Internal logical error");
+      }
+      console.log("old password ", password);
+      console.log("new password ", hashedPass);
 
-      return response;
+      const isMatchedPassword: boolean = await Hashing.comparePassword(
+        password,
+        hashedPass
+      );
+      console.log("password is same: ", isMatchedPassword);
+      response.statusCode = responseCodes.userCreated;
+
+      // return response;
     } catch (err: any) {
       if (err instanceof ValidationError) {
-        // throw new ApolloError("Validation error: ", err.message);
-        console.log("validation err")
+        console.log("validation err");
+        response.message = err.message;
+        response.statusCode = responseCodes.partialContent;
       } else {
-        console.log("internal error ");
+        response.message = err.message || "Internal occurred";
+        response.statusCode = responseCodes.internalError;
       }
+    } finally {
+      return response;
     }
 
-    // console.log(username, bio, email, name, password);
-
-    // use zod for checking !
-    // return "bhupendra Jogiii";
-    // check all fields
     // password encryption
   },
 
