@@ -9,8 +9,8 @@ export interface userRegistrationResponse {
 }
 
 export interface userLoginResponse {
-  username: string;
-  password: string;
+  message: string;
+  statusCode?: number;
 }
 
 const userServices: UserServices = new UserServices();
@@ -35,8 +35,8 @@ export const mutationsResolvers = {
   ) => {
     console.log(args.username, args.password);
 
-    await userServices.userLogin(args);
+    return await userServices.userLogin(args);
 
-    return true;
+    // return true;
   },
 };

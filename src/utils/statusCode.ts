@@ -3,7 +3,8 @@ enum responseCodes {
   partialContent = 206,
   unauthorized = 401,
   notFound = 404,
-  internalError = 500
+  internalError = 500,
+  authenticated =200,
 }
 
 

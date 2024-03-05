@@ -1,5 +1,8 @@
 import { prismaInstance } from "../index";
-import { userRegistrationModel } from "../graphql/models/userModel";
+import {
+  userLoginModel,
+  userRegistrationModel,
+} from "../graphql/models/userModel";
 import { v4 as uniqueId } from "uuid";
 import { profilePictureUrl } from "../utils/constants";
 import { Prisma } from "@prisma/client";
@@ -39,7 +42,23 @@ export default class DatabaseOperations {
   }
 
   // user login
-  async loginUser(): Promise<void> {
-    // to login
+  async loginUser(userDetails: userLoginModel): Promise<void> {
+    try {
+      const { username, password } = userDetails;
+
+      const res: userRegistrationModel | null =
+        await prismaInstance.user.findUnique({
+          where: {
+            username: username,
+          },
+        });
+
+        // if (res == null) {
+        //   return new Error("Unauthorized access");
+        // }
+    } catch (err: any) {
+    } finally {
+      prismaInstance.$disconnect();
+    }
   }
 }

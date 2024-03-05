@@ -92,30 +92,36 @@ class UserServices {
         throw new ValidationError("invalid input format");
       }
 
-      // const response: boolean = await comp
-
-      const res = await prismaInstance.user.findUnique({
-        where: {
-          username: username,
-        },
-      });
+      const res: userRegistrationModel | null =
+        await prismaInstance.user.findUnique({
+          where: {
+            username: username,
+          },
+        });
       if (res == null) {
-        response.message = "no records found ";
-        response.statusCode = responseCodes.notFound;
-        return response;
+        throw new Error("Unauthorized access");
       }
 
       const passwordVerification: boolean = await Hashing.comparePassword(
         password,
         res?.password
       );
-      console.log("is password verified ", passwordVerification);
 
+      if (!passwordVerification) {
+        throw new Error("Username or Password is incorrect");
+      }
+
+      response.statusCode = responseCodes.authenticated;
+
+      // write logic for jwt based auth
       console.log("Welcome: ", res?.name);
     } catch (err: any) {
       if (err instanceof ValidationError) {
         response.message = err.message;
         response.statusCode = responseCodes.partialContent;
+      } else {
+        response.message = err.message;
+        response.statusCode = responseCodes.unauthorized;
       }
     } finally {
       return response;

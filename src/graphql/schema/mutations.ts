@@ -1,7 +1,7 @@
 const mutations = `
 type userLoginResponse {
-  username: String
-  password: String
+  statusCode: Int
+  message: String
 }
 
 type userRegistrationResponse {
@@ -11,7 +11,7 @@ type userRegistrationResponse {
 
 type Mutation {
   # user login endpoint
-  loginUser(username: String!, password: String!): Boolean
+  loginUser(username: String!, password: String!): userLoginResponse
 
   # user registration endpoint
   registerUser(
