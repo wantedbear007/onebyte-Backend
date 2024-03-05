@@ -1,11 +1,19 @@
 const mutations = `
+type userLoginResponse {
+  username: String
+  password: String
+}
+
 type userRegistrationResponse {
   statusCode: Int
   message: String
 }
 
 type Mutation {
-  getName(name: String!): String
+  # user login endpoint
+  loginUser(username: String!, password: String!): Boolean
+
+  # user registration endpoint
   registerUser(
     name: String!
     email: String!

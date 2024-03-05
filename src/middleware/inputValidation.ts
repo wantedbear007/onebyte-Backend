@@ -1,5 +1,8 @@
 import * as Z from "zod";
-import { userRegistrationModel } from "../graphql/models/userRegistrationModel";
+import {
+  userLoginModel,
+  userRegistrationModel,
+} from "../graphql/models/userModel";
 
 const registrationSchema = Z.object({
   name: Z.string(),
@@ -7,6 +10,11 @@ const registrationSchema = Z.object({
   password: Z.string(),
   bio: Z.string(),
   username: Z.string(),
+});
+
+const loginSchema = Z.object({
+  username: Z.string(),
+  password: Z.string(),
 });
 
 export default class InputValidation {
@@ -19,5 +27,11 @@ export default class InputValidation {
     } else {
       return false;
     }
+  }
+
+  // login validation
+  static login(userDetails: userLoginModel): boolean {
+    const results = loginSchema.safeParse(userDetails);
+    return results.success ? true : false;
   }
 }

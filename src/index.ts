@@ -4,7 +4,7 @@ import DatabaseOperations, { DatabaseResponse } from "./prisma/operations";
 dotenv.config();
 
 import { PrismaClient } from "@prisma/client";
-import { userRegistrationModel } from "./graphql/models/userRegistrationModel";
+import { userRegistrationModel } from "./graphql/models/userModel";
 
 export const prismaInstance = new PrismaClient({ log: ["info", "query"] });
 

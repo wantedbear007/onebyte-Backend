@@ -1,5 +1,5 @@
 import { prismaInstance } from "../index";
-import { userRegistrationModel } from "../graphql/models/userRegistrationModel";
+import { userRegistrationModel } from "../graphql/models/userModel";
 import { v4 as uniqueId } from "uuid";
 import { profilePictureUrl } from "../utils/constants";
 import { Prisma } from "@prisma/client";

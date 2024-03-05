@@ -34,6 +34,7 @@
     "express": "^4.18.3",
     "graphql": "^16.8.1",
     "graphql-import-node": "^0.0.5",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "uuid": "^9.0.1",
     "zod": "^3.22.4"
