@@ -53,12 +53,30 @@ export default class DatabaseOperations {
           },
         });
 
-        // if (res == null) {
-        //   return new Error("Unauthorized access");
-        // }
+      // if (res == null) {
+      //   return new Error("Unauthorized access");
+      // }
     } catch (err: any) {
     } finally {
       prismaInstance.$disconnect();
+    }
+  }
+
+  // to update user last login
+  static async updateLastLogin(username: string): Promise<boolean> {
+    try {
+      const res = await prismaInstance.user.update({
+        where: {
+          username: username,
+        },
+        data: {
+          lastLogin: new Date(),
+        },
+      });
+
+      return res == null ? false : true;
+    } catch (err: any) {
+      return false;
     }
   }
 }

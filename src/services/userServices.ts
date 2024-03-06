@@ -1,4 +1,5 @@
 import { ValidationError } from "apollo-server-core";
+import * as jwt from "jsonwebtoken";
 
 // user defined
 import {
@@ -10,11 +11,13 @@ import Hashing from "./passwordHashing";
 import DatabaseOperations, { DatabaseResponse } from "../prisma/operations";
 import responseCodes from "../utils/statusCode";
 import { prismaInstance } from "..";
+import { jwt_secret } from "../utils/constants";
 
 // to return back response to front-end
 export interface userServicesResponse {
   message: string;
   statusCode?: number;
+  token?: string;
 }
 
 class UserServices {
@@ -98,6 +101,7 @@ class UserServices {
             username: username,
           },
         });
+
       if (res == null) {
         throw new Error("Unauthorized access");
       }
@@ -111,10 +115,15 @@ class UserServices {
         throw new Error("Username or Password is incorrect");
       }
 
-      response.statusCode = responseCodes.authenticated;
+      // update last login of user
+      // creating JWT based token
+      const jwtToken = jwt.sign({ username: username }, jwt_secret, {
+        expiresIn: "24h",
+      });
 
-      // write logic for jwt based auth
-      console.log("Welcome: ", res?.name);
+      await DatabaseOperations.updateLastLogin(username);
+      response.token = jwtToken;
+      response.statusCode = responseCodes.authenticated;
     } catch (err: any) {
       if (err instanceof ValidationError) {
         response.message = err.message;

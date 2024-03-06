@@ -2,6 +2,7 @@ const mutations = `
 type userLoginResponse {
   statusCode: Int
   message: String
+  token: String
 }
 
 type userRegistrationResponse {
