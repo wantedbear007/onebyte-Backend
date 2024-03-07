@@ -1,5 +1,5 @@
-  const types = 
-  `type User {
+const types = `#graphql
+  type User {
     userId: String,
     name: String,
     email: String,
@@ -10,6 +10,4 @@
   }
   `;
 
-  export default types;
-
-
+export default types;

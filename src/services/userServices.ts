@@ -9,7 +9,7 @@ import {
 import InputValidation from "../middleware/inputValidation";
 import Hashing from "./passwordHashing";
 import DatabaseOperations, { DatabaseResponse } from "../prisma/operations";
-import responseCodes from "../utils/statusCode";
+import responseCodes from "../utils/responseCodes";
 import { prismaInstance } from "..";
 import { jwt_secret } from "../utils/constants";
 
@@ -139,10 +139,33 @@ class UserServices {
     }
   }
 
-  async userVerify(token: string): Promise<void> {
+  async userVerify(token: string): Promise<userServicesResponse> {
+    let response: userServicesResponse = {
+      message: "JWT verified",
+    };
     try {
-      await DatabaseOperations.verifyUser(token);
-    } catch (err: any) {}
+      const isVerified: DatabaseResponse = await DatabaseOperations.verifyUser(
+        token
+      );
+
+      if (isVerified === DatabaseResponse.tokenVerified) {
+        response.statusCode = responseCodes.authenticated;
+      }
+
+      if (isVerified === DatabaseResponse.tokenExpired) {
+        throw new jwt.TokenExpiredError("Token expired", new Date());
+      }
+    } catch (err: any) {
+      if (err instanceof jwt.TokenExpiredError) {
+        response.message = "JWT token expired !";
+        response.statusCode = responseCodes.unauthorized;
+      } else {
+        response.message = "Internal error";
+        response.statusCode = responseCodes.internalError;
+      }
+    } finally {
+      return response;
+    }
   }
 }
 

@@ -1,6 +1,8 @@
 // user defined
 import { userLoginModel, userRegistrationModel } from "../models/userModel";
-import UserServices from "../../services/userServices";
+import UserServices, {
+  userServicesResponse,
+} from "../../services/userServices";
 
 // user registration error
 export interface userRegistrationResponse {
@@ -11,6 +13,12 @@ export interface userRegistrationResponse {
 export interface userLoginResponse {
   message: string;
   statusCode?: number;
+}
+
+interface userVerifyResponse {
+  message: string;
+  statusCode: number;
+  token: String;
 }
 
 const userServices: UserServices = new UserServices();
@@ -38,12 +46,19 @@ export const mutationsResolvers = {
 
   verifyUser: async (
     parent: any,
-    args: {token: string},
+    args: { token: string },
     context: any,
     info: any
-  ) => {
-    
-    await userServices.userVerify(args.token);
-    return "hello from bhanu"
-  }
+  ) => { 
+    const verificationResults: userServicesResponse =
+      await userServices.userVerify(args.token);
+
+    const response: userVerifyResponse = {
+      message: verificationResults.message,
+      statusCode: verificationResults.statusCode!,
+      token: args.token,
+    };
+
+    return response;
+  },
 };

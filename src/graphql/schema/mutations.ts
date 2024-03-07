@@ -1,4 +1,4 @@
-const mutations = `
+const mutations = `#graphql
 type userLoginResponse {
   statusCode: Int
   message: String
@@ -10,10 +10,16 @@ type userRegistrationResponse {
   message: String
 }
 
+type verifyUserResponse {
+  statusCode: Int!,
+  message: String!,
+  token: String!
+}
+
 type Mutation {
 
   #user verification endpoint
-  verifyUser(token: String!): String
+  verifyUser(token: String!): verifyUserResponse
 
   # user login endpoint
   loginUser(username: String!, password: String!): userLoginResponse

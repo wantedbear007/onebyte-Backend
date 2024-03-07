@@ -4,8 +4,7 @@ enum responseCodes {
   unauthorized = 401,
   notFound = 404,
   internalError = 500,
-  authenticated =200,
+  authenticated = 200,
 }
-
 
 export default responseCodes;

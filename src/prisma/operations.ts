@@ -2,7 +2,7 @@ import { v4 as uniqueId } from "uuid";
 import { Prisma } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
 
-// user defined 
+// user defined
 import { prismaInstance } from "../index";
 import {
   userLoginModel,
@@ -15,6 +15,8 @@ export enum DatabaseResponse {
   operationFailed,
   operationSuccess,
   alreadyRegistered,
+  tokenExpired,
+  tokenVerified,
 }
 
 export default class DatabaseOperations {
@@ -84,13 +86,22 @@ export default class DatabaseOperations {
   }
 
   // to verify user
-  static async verifyUser(token: string): Promise<void> {
+  static async verifyUser(token: string): Promise<DatabaseResponse> {
     try {
       const verification = jwt.verify(token, jwt_secret);
-      console.log("your verification is: ", verification)
+      if (!verification) {
+        throw new Error("Internal error");
+      }
+
+      return DatabaseResponse.tokenVerified;
     } catch (err: any) {
-      console.log(err )
-      console.log("error while verifying !")
+      if (err instanceof jwt.TokenExpiredError) {
+        console.log("token expired ");
+        return DatabaseResponse.tokenExpired;
+      } else {
+        return DatabaseResponse.operationFailed;
+      }
+    } finally {
     }
   }
 }
