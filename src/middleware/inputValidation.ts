@@ -3,7 +3,7 @@ import {
   userLoginModel,
   userRegistrationModel,
 } from "../graphql/models/userModel";
-import { noteCreateModel } from "../graphql/models/noteModel";
+import { noteModel } from "../graphql/models/noteModel";
 
 const registrationSchema = Z.object({
   name: Z.string(),
@@ -38,7 +38,7 @@ export default class InputValidation {
   }
 
   // notes validation
-  static note(noteDetails: noteCreateModel): boolean {
+  static note(noteDetails: noteModel): boolean {
     const results = notesSchema.safeParse(noteDetails);
     return results.success ? true : false;
   }

@@ -16,6 +16,21 @@ type verifyUserResponse {
   token: String!
 }
 
+type note {
+  title: String!,
+  body: String!,
+  # change String to date
+  createdAt: String,
+  updatedAt: String,
+  backgroundColor: String
+}
+
+type userNotes {
+  message: String!,
+  statusCode: Int,
+  notes: [note]
+}
+
 type Mutation {
 
   #user verification endpoint
@@ -41,6 +56,11 @@ type Mutation {
     body: String!
     background: String!
   ): userResponse
+
+  # get all notes for a specific user
+  getNotes (
+    token: String!
+  ): userNotes 
 
 }
 

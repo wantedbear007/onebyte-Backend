@@ -1,2 +1,4 @@
 1. matrix of number of users
 2. single instance of server and multiple instance of server (clusters)
+3. Update last login when user access token 
+4. Refactor getNotes function in operations 

@@ -3,8 +3,10 @@ import { userLoginModel, userRegistrationModel } from "../models/userModel";
 import UserServices, {
   userServicesResponse,
 } from "../../services/userServices";
-import { noteCreateModel } from "../models/noteModel";
-import NoteServices from "../../services/notesServices";
+import { noteModel } from "../models/noteModel";
+import NoteServices, {
+  noteServiceResponse,
+} from "../../services/notesServices";
 
 // user registration error
 export interface userRegistrationResponse {
@@ -31,7 +33,7 @@ export const mutationsResolvers = {
     parent: any,
     args: userRegistrationModel,
     context: any,
-    info: any
+    info: any,
   ) => {
     return await userServices.userRegistration(args);
   },
@@ -41,7 +43,7 @@ export const mutationsResolvers = {
     parent: any,
     args: userLoginModel,
     context: any,
-    info: any
+    info: any,
   ) => {
     return await userServices.userLogin(args);
   },
@@ -50,10 +52,10 @@ export const mutationsResolvers = {
     parent: any,
     args: { token: string },
     context: any,
-    info: any
+    info: any,
   ) => {
     const verificationResults: userServicesResponse =
-    await UserServices.userVerify(args.token);
+      await UserServices.userVerify(args.token);
 
     const response: userVerifyResponse = {
       message: verificationResults.message!,
@@ -64,17 +66,21 @@ export const mutationsResolvers = {
     return response;
   },
 
-  createNote: async (
-    parent: any,
-    args: noteCreateModel,
-    context: any,
-    info: any
-  ) => {
-    const { title, body, token } = args;
-    console.log("inside create note endpoint");
-    console.log("data ", args);
+  // endpoint handler to create note
+  createNote: async (parent: any, args: noteModel, context: any, info: any) => {
     return await NoteServices.createNote(args);
-    // console.log(res)
-    // return "hello bhanu";
+  },
+
+  // endpoint handler to get all notes of a specific user
+  getNotes: async (
+    parent: any,
+    args: { token: string },
+    context: any,
+    info: any,
+  ) => {
+    console.log("inside get notes in mutation resolvers !");
+    const res: noteServiceResponse = await NoteServices.getNotes(args.token);
+    console.log(res);
+    return res;
   },
 };

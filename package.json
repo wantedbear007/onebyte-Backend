@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "production": "npm start prettier && build/index",
     "formatCode": "prettier --write \"src/**/*.ts\"",
     "compile": "tsc",
     "start": "node build/index",
@@ -13,7 +14,7 @@
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "wantedbear",
   "license": "ISC",
   "devDependencies": {
     "@prisma/studio": "^0.499.0",

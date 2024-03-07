@@ -11,10 +11,9 @@ dotenv.config();
 export const prismaInstance = new PrismaClient({ log: ["info", "query"] });
 
 async function startServers(): Promise<void> {
-
-  // for single service 
+  // for single service
   await startGraphQL();
-  
+
   // for distributed system
   // await distributedServerLaunch();
 }

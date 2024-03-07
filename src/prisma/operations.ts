@@ -9,7 +9,7 @@ import {
   userRegistrationModel,
 } from "../graphql/models/userModel";
 import { jwt_secret, profilePictureUrl } from "../utils/constants";
-import { noteCreateModel } from "../graphql/models/noteModel";
+import { noteModel, tempNoteModel } from "../graphql/models/noteModel";
 import { noteServiceResponse } from "../services/notesServices";
 
 // error responses
@@ -24,7 +24,7 @@ export enum DatabaseResponse {
 export default class DatabaseOperations {
   // user registration
   static async registerUser(
-    userDetails: userRegistrationModel
+    userDetails: userRegistrationModel,
   ): Promise<DatabaseResponse> {
     try {
       const res = await prismaInstance.user.create({
@@ -108,8 +108,8 @@ export default class DatabaseOperations {
 
   // create note
   static async createNote(
-    args: noteCreateModel,
-    username: string
+    args: noteModel,
+    username: string,
   ): Promise<DatabaseResponse> {
     const { title, body, color } = args;
     try {
@@ -137,6 +137,52 @@ export default class DatabaseOperations {
       return DatabaseResponse.operationFailed;
     } finally {
       prismaInstance.$disconnect();
+    }
+  }
+
+  // get specific user notes
+  static async getNotes(token: string): Promise<noteModel[]> {
+    let allUserNotes: noteModel[] = [];
+    try {
+      const res: DatabaseResponse = await this.verifyUser(token);
+      if (res === DatabaseResponse.tokenVerified) {
+        const data: jwt.JwtPayload | null = jwt.decode(token, {
+          complete: true,
+        });
+
+        if (data?.payload) {
+          const { username } = data.payload;
+
+          const res = await prismaInstance.user.findUnique({
+            where: {
+              username: username,
+            },
+            include: {
+              notes: true,
+            },
+          });
+
+          if (!res) {
+            throw new Error("hello");
+          }
+
+          allUserNotes = res.notes.map((note) => ({
+            id: note.id,
+            title: note.title,
+            body: note.body,
+            createdAt: note.createdAt,
+            updatedAt: note.updatedAt,
+            backgroundColor: note.backgroundColor,
+          }));
+        }
+      } else {
+        throw new Error("something wrong with token. login again");
+      }
+    } catch (err: any) {
+      return allUserNotes;
+    } finally {
+      prismaInstance.$disconnect();
+      return allUserNotes;
     }
   }
 }
