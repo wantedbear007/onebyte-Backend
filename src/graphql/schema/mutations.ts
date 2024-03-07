@@ -40,12 +40,11 @@ type Mutation {
     title: String!
     body: String!
     background: String!
-  ): String
+  ): userResponse
 
 }
 
 `;
-
 
 // implement update user module
 export default mutations;

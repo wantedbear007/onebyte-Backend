@@ -73,7 +73,8 @@ export const mutationsResolvers = {
     const { title, body, token } = args;
     console.log("inside create note endpoint");
     console.log("data ", args);
-    await NoteServices.createNote(args);
-    return "hello bhanu";
+    return await NoteServices.createNote(args);
+    // console.log(res)
+    // return "hello bhanu";
   },
 };

@@ -1,12 +1,12 @@
 import * as jwt from "jsonwebtoken";
+import { AuthenticationError, ValidationError } from "apollo-server-core";
 
 // user defined
-import { AuthenticationError, ValidationError } from "apollo-server-core";
 import { noteCreateModel } from "../graphql/models/noteModel";
 import InputValidation from "../middleware/inputValidation";
 import responseCodes from "../utils/responseCodes";
 import UserServices, { userServicesResponse } from "./userServices";
-import { execPath } from "process";
+import DatabaseOperations from "../prisma/operations";
 
 export interface noteServiceResponse {
   message: string;
@@ -16,9 +16,7 @@ export interface noteServiceResponse {
 class NoteServices {
   // to create note
   static async createNote(args: noteCreateModel): Promise<noteServiceResponse> {
-    const { title, body, token, color } = args;
-
-    console.log("inside create nottoooooooooooooo");
+    const { token } = args;
 
     // response
     let response: noteServiceResponse = {
@@ -45,10 +43,15 @@ class NoteServices {
       if (!decodedToken) {
         throw new Error("Internal error");
       }
-      
+
       const { username } = decodedToken.payload;
 
       console.log("decoded token ", decodedToken);
+
+
+
+      DatabaseOperations.createNote(args, username);
+      response.statusCode = responseCodes.userCreated
     } catch (err: any) {
       if (err instanceof ValidationError) {
         response.message = err.message;

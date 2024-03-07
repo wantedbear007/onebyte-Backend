@@ -10,6 +10,7 @@ import {
 } from "../graphql/models/userModel";
 import { jwt_secret, profilePictureUrl } from "../utils/constants";
 import { noteCreateModel } from "../graphql/models/noteModel";
+import { noteServiceResponse } from "../services/notesServices";
 
 // error responses
 export enum DatabaseResponse {
@@ -23,7 +24,7 @@ export enum DatabaseResponse {
 export default class DatabaseOperations {
   // user registration
   static async registerUser(
-    userDetails: userRegistrationModel,
+    userDetails: userRegistrationModel
   ): Promise<DatabaseResponse> {
     try {
       const res = await prismaInstance.user.create({
@@ -50,7 +51,7 @@ export default class DatabaseOperations {
   // user login
   async loginUser(userDetails: userLoginModel): Promise<void> {
     try {
-      const { username, password } = userDetails;
+      const { username } = userDetails;
 
       const res: userRegistrationModel | null =
         await prismaInstance.user.findUnique({
@@ -97,28 +98,45 @@ export default class DatabaseOperations {
       return DatabaseResponse.tokenVerified;
     } catch (err: any) {
       if (err instanceof jwt.TokenExpiredError) {
-       // console.log("token expired ");
+        // console.log("token expired ");
         return DatabaseResponse.tokenExpired;
       } else {
         return DatabaseResponse.operationFailed;
       }
-    } 
+    }
   }
 
   // create note
-  static async createNote(args: noteCreateModel): Promise<void> {
-      try {
-        // prismaInstance.user.create(
-        //   {
-        //     data: {
-        //       notes
-        //     }
-        //   }
-        // )
+  static async createNote(
+    args: noteCreateModel,
+    username: string
+  ): Promise<DatabaseResponse> {
+    const { title, body, color } = args;
+    try {
+      const userInstance = await prismaInstance.user.findUnique({
+        where: {
+          username: username,
+        },
+      });
 
-      } catch (err: any) {
-        console.log("erro in create note operation")
-        console.log(err)
+      if (!userInstance) {
+        throw new Error("user not found");
       }
+
+      await prismaInstance.note.create({
+        data: {
+          backgroundColor: color,
+          title: title,
+          body: body,
+          authorId: userInstance.userId,
+        },
+      });
+
+      return DatabaseResponse.operationSuccess;
+    } catch (err: any) {
+      return DatabaseResponse.operationFailed;
+    } finally {
+      prismaInstance.$disconnect();
+    }
   }
 }

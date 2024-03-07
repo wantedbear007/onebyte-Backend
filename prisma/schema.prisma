@@ -29,12 +29,12 @@ model User {
 
 model Note {
   id Int @id @default(autoincrement())
-  noteId String @unique
+  // noteId String @unique
   title String
   body String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  backgroundColor String
+  backgroundColor String @default("##FFFC99")
 
   // relation fields
   author User @relation(fields: [authorId], references: [userId])
