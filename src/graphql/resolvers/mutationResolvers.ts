@@ -3,6 +3,8 @@ import { userLoginModel, userRegistrationModel } from "../models/userModel";
 import UserServices, {
   userServicesResponse,
 } from "../../services/userServices";
+import { noteCreateModel } from "../models/noteModel";
+import NoteServices from "../../services/notesServices";
 
 // user registration error
 export interface userRegistrationResponse {
@@ -29,7 +31,7 @@ export const mutationsResolvers = {
     parent: any,
     args: userRegistrationModel,
     context: any,
-    info: any,
+    info: any
   ) => {
     return await userServices.userRegistration(args);
   },
@@ -39,7 +41,7 @@ export const mutationsResolvers = {
     parent: any,
     args: userLoginModel,
     context: any,
-    info: any,
+    info: any
   ) => {
     return await userServices.userLogin(args);
   },
@@ -48,17 +50,30 @@ export const mutationsResolvers = {
     parent: any,
     args: { token: string },
     context: any,
-    info: any,
+    info: any
   ) => {
     const verificationResults: userServicesResponse =
-      await userServices.userVerify(args.token);
+    await UserServices.userVerify(args.token);
 
     const response: userVerifyResponse = {
-      message: verificationResults.message,
+      message: verificationResults.message!,
       statusCode: verificationResults.statusCode!,
       token: args.token,
     };
 
     return response;
+  },
+
+  createNote: async (
+    parent: any,
+    args: noteCreateModel,
+    context: any,
+    info: any
+  ) => {
+    const { title, body, token } = args;
+    console.log("inside create note endpoint");
+    console.log("data ", args);
+    await NoteServices.createNote(args);
+    return "hello bhanu";
   },
 };

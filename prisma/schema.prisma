@@ -21,7 +21,7 @@ model User {
   bio String
   picture String?
   password String
-  token String?
+  // token String?
  
   // relation fields 
   notes Note[]
@@ -37,6 +37,6 @@ model Note {
   backgroundColor String
 
   // relation fields
-  author User @relation(fields: [authorId], references: [id])
-  authorId Int
+  author User @relation(fields: [authorId], references: [userId])
+  authorId String
 }

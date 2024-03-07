@@ -4,3 +4,5 @@ export const profilePictureUrl: string =
 export const port: string | number = process.env.port || 4000;
 
 export const jwt_secret: string = process.env.JWT_SECRET || "wanted";
+
+// JWT_SECRET="9c@h#Yp!LsTbN^wA5gFjKm2oQr3u6x8z"

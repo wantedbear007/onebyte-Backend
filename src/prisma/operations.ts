@@ -9,6 +9,7 @@ import {
   userRegistrationModel,
 } from "../graphql/models/userModel";
 import { jwt_secret, profilePictureUrl } from "../utils/constants";
+import { noteCreateModel } from "../graphql/models/noteModel";
 
 // error responses
 export enum DatabaseResponse {
@@ -96,12 +97,28 @@ export default class DatabaseOperations {
       return DatabaseResponse.tokenVerified;
     } catch (err: any) {
       if (err instanceof jwt.TokenExpiredError) {
-        console.log("token expired ");
+       // console.log("token expired ");
         return DatabaseResponse.tokenExpired;
       } else {
         return DatabaseResponse.operationFailed;
       }
-    } finally {
-    }
+    } 
+  }
+
+  // create note
+  static async createNote(args: noteCreateModel): Promise<void> {
+      try {
+        // prismaInstance.user.create(
+        //   {
+        //     data: {
+        //       notes
+        //     }
+        //   }
+        // )
+
+      } catch (err: any) {
+        console.log("erro in create note operation")
+        console.log(err)
+      }
   }
 }

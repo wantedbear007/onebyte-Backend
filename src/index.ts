@@ -5,13 +5,18 @@ import { PrismaClient } from "@prisma/client";
 import { userRegistrationModel } from "./graphql/models/userModel";
 import DatabaseOperations, { DatabaseResponse } from "./prisma/operations";
 import distributedServerLaunch from "./services/distributedLoad";
+import { startGraphQL } from "./graphql/index";
 dotenv.config();
 
 export const prismaInstance = new PrismaClient({ log: ["info", "query"] });
 
 async function startServers(): Promise<void> {
-  // await startGraphQL();
-  await distributedServerLaunch();
+
+  // for single service 
+  await startGraphQL();
+  
+  // for distributed system
+  // await distributedServerLaunch();
 }
 startServers();
 

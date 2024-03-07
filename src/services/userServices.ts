@@ -15,7 +15,7 @@ import { jwt_secret } from "../utils/constants";
 
 // to return back response to front-end
 export interface userServicesResponse {
-  message: string;
+  message?: string;
   statusCode?: number;
   token?: string;
 }
@@ -120,7 +120,7 @@ class UserServices {
 
       await DatabaseOperations.updateLastLogin(username);
 
-      console.log("Your jwt is ", jwtToken);
+      // console.log("Your jwt is ", jwtToken);
       // const jwt_response = jwt.verify(jwtToken, "jwt_secret")
 
       response.token = jwtToken;
@@ -138,7 +138,7 @@ class UserServices {
     }
   }
 
-  async userVerify(token: string): Promise<userServicesResponse> {
+  static async userVerify(token: string): Promise<userServicesResponse> {
     let response: userServicesResponse = {
       message: "JWT verified",
     };

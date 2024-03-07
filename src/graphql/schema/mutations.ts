@@ -5,7 +5,7 @@ type userLoginResponse {
   token: String
 }
 
-type userRegistrationResponse {
+type userResponse {
   statusCode: Int
   message: String
 }
@@ -32,9 +32,20 @@ type Mutation {
     bio: String!
     profileUrl: String
     password: String!
-  ): userRegistrationResponse
+  ): userResponse
+
+  # create note endpoint
+  createNote (
+    token: String!
+    title: String!
+    body: String!
+    background: String!
+  ): String
+
 }
 
 `;
 
+
+// implement update user module
 export default mutations;
