@@ -115,13 +115,15 @@ class UserServices {
         throw new Error("Username or Password is incorrect");
       }
 
-      // update last login of user
-      // creating JWT based token
       const jwtToken = jwt.sign({ username: username }, jwt_secret, {
-        expiresIn: "24h",
+        // expiresIn: "2h",
       });
 
       await DatabaseOperations.updateLastLogin(username);
+
+      console.log("Your jwt is ", jwtToken);
+      // const jwt_response = jwt.verify(jwtToken, "jwt_secret")
+
       response.token = jwtToken;
       response.statusCode = responseCodes.authenticated;
     } catch (err: any) {
@@ -135,6 +137,12 @@ class UserServices {
     } finally {
       return response;
     }
+  }
+
+  async userVerify(token: string): Promise<void> {
+    try {
+      await DatabaseOperations.verifyUser(token);
+    } catch (err: any) {}
   }
 }
 

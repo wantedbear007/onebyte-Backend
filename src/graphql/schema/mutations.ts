@@ -11,6 +11,10 @@ type userRegistrationResponse {
 }
 
 type Mutation {
+
+  #user verification endpoint
+  verifyUser(token: String!): String
+
   # user login endpoint
   loginUser(username: String!, password: String!): userLoginResponse
 

@@ -1,11 +1,14 @@
+import { v4 as uniqueId } from "uuid";
+import { Prisma } from "@prisma/client";
+import * as jwt from "jsonwebtoken";
+
+// user defined 
 import { prismaInstance } from "../index";
 import {
   userLoginModel,
   userRegistrationModel,
 } from "../graphql/models/userModel";
-import { v4 as uniqueId } from "uuid";
-import { profilePictureUrl } from "../utils/constants";
-import { Prisma } from "@prisma/client";
+import { jwt_secret, profilePictureUrl } from "../utils/constants";
 
 // error responses
 export enum DatabaseResponse {
@@ -77,6 +80,17 @@ export default class DatabaseOperations {
       return res == null ? false : true;
     } catch (err: any) {
       return false;
+    }
+  }
+
+  // to verify user
+  static async verifyUser(token: string): Promise<void> {
+    try {
+      const verification = jwt.verify(token, jwt_secret);
+      console.log("your verification is: ", verification)
+    } catch (err: any) {
+      console.log(err )
+      console.log("error while verifying !")
     }
   }
 }

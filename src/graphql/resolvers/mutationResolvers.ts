@@ -33,10 +33,17 @@ export const mutationsResolvers = {
     context: any,
     info: any
   ) => {
-    console.log(args.username, args.password);
-
     return await userServices.userLogin(args);
-
-    // return true;
   },
+
+  verifyUser: async (
+    parent: any,
+    args: {token: string},
+    context: any,
+    info: any
+  ) => {
+    
+    await userServices.userVerify(args.token);
+    return "hello from bhanu"
+  }
 };
