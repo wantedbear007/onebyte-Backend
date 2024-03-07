@@ -17,12 +17,12 @@ class Hashing {
   // compare passwords
   static async comparePassword(
     planPassword: string,
-    hashedPassword: string
+    hashedPassword: string,
   ): Promise<boolean> {
     try {
       const isMatched: boolean = await bcrypt.compare(
         planPassword,
-        hashedPassword
+        hashedPassword,
       );
       return isMatched;
     } catch (err: any) {

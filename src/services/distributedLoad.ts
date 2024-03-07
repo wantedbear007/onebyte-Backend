@@ -21,7 +21,7 @@ async function distributedServerLaunch() {
 
     cluster.on("exit", (worker: Worker, code) => {
       console.log(
-        `Worker ${worker.process.pid} died, Err ${code}. Trying to restart !`
+        `Worker ${worker.process.pid} died, Err ${code}. Trying to restart !`,
       );
       cluster.fork();
     });

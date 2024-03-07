@@ -6,5 +6,3 @@ type Query {
 `;
 
 export default queries;
-
-

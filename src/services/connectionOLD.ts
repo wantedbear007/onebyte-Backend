@@ -47,9 +47,7 @@ export class ConnectionServices {
 
   async getResults(query: string): Promise<void> {
     try {
-      // check connection 
-    } catch (err) {
-
-    }
+      // check connection
+    } catch (err) {}
   }
 }

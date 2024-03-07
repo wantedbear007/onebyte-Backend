@@ -23,7 +23,7 @@ export interface userServicesResponse {
 class UserServices {
   // to register users
   async userRegistration(
-    args: userRegistrationModel
+    args: userRegistrationModel,
   ): Promise<userServicesResponse> {
     const { username, bio, email, name, password } = args;
 
@@ -41,9 +41,8 @@ class UserServices {
       if (!validateDetails) {
         throw new ValidationError("data format is invalid");
       }
-      const hashedPassword: string | null = await Hashing.hashPassword(
-        password
-      );
+      const hashedPassword: string | null =
+        await Hashing.hashPassword(password);
       if (hashedPassword === null) {
         throw new Error("Internal logical error");
       }
@@ -108,7 +107,7 @@ class UserServices {
 
       const passwordVerification: boolean = await Hashing.comparePassword(
         password,
-        res?.password
+        res?.password,
       );
 
       if (!passwordVerification) {
@@ -144,9 +143,8 @@ class UserServices {
       message: "JWT verified",
     };
     try {
-      const isVerified: DatabaseResponse = await DatabaseOperations.verifyUser(
-        token
-      );
+      const isVerified: DatabaseResponse =
+        await DatabaseOperations.verifyUser(token);
 
       if (isVerified === DatabaseResponse.tokenVerified) {
         response.statusCode = responseCodes.authenticated;

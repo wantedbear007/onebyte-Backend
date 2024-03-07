@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "formatCode": "prettier --write \"src/**/*.ts\"",
     "compile": "tsc",
     "start": "node build/index",
     "build": "tsc -p .",
     "dev": "tsc-watch --onSuccess \"npm start\"",
-    "delCache": "npm cache clean --force"
+    "delCache": "npm cache clean --force",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,10 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.19",
     "@types/uuid": "^9.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
     "prisma": "^5.10.2",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"

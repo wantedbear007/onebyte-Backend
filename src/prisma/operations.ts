@@ -22,7 +22,7 @@ export enum DatabaseResponse {
 export default class DatabaseOperations {
   // user registration
   static async registerUser(
-    userDetails: userRegistrationModel
+    userDetails: userRegistrationModel,
   ): Promise<DatabaseResponse> {
     try {
       const res = await prismaInstance.user.create({

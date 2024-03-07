@@ -29,7 +29,7 @@ export const mutationsResolvers = {
     parent: any,
     args: userRegistrationModel,
     context: any,
-    info: any
+    info: any,
   ) => {
     return await userServices.userRegistration(args);
   },
@@ -39,7 +39,7 @@ export const mutationsResolvers = {
     parent: any,
     args: userLoginModel,
     context: any,
-    info: any
+    info: any,
   ) => {
     return await userServices.userLogin(args);
   },
@@ -48,8 +48,8 @@ export const mutationsResolvers = {
     parent: any,
     args: { token: string },
     context: any,
-    info: any
-  ) => { 
+    info: any,
+  ) => {
     const verificationResults: userServicesResponse =
       await userServices.userVerify(args.token);
 
