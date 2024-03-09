@@ -3,19 +3,19 @@ import { PrismaClient } from "@prisma/client";
 import process from "process";
 
 // user defined
-import distributedServerLaunch from "./services/distributedLoad";
+import clusteredLaunch from "./services/clusteredLaunch";
 import { startGraphQL } from "./graphql/index";
 dotenv.config();
 
 export const prismaInstance = new PrismaClient({});
 
-console.log(process.argv[2])
-
 async function startServers(): Promise<void> {
-  // for single service
-  await startGraphQL();
-
-  // for distributed system
-  // await distributedServerLaunch();
+  if (process.argv[2] == "pro") {
+    // for single service
+    await clusteredLaunch();
+  } else {
+    // for distributed system
+    await startGraphQL();
+  }
 }
 startServers();

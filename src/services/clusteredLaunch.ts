@@ -2,7 +2,7 @@ import cluster, { Worker } from "cluster";
 import os from "os";
 import { startGraphQL } from "../graphql/index";
 
-async function distributedServerLaunch() {
+async function clusteredLaunch() {
   // number of server instances
   const cpuCores: number = os.cpus().length;
   const system: string = os.machine();
@@ -30,4 +30,4 @@ async function distributedServerLaunch() {
   }
 }
 
-export default distributedServerLaunch;
+export default clusteredLaunch;
