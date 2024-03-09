@@ -5,7 +5,6 @@ import process from "process";
 // user defined
 import clusteredLaunch from "./services/clusteredLaunch";
 import { startGraphQL } from "./graphql/index";
-dotenv.config();
 
 export const prismaInstance = new PrismaClient({});
 
@@ -15,6 +14,7 @@ async function startServers(): Promise<void> {
     await clusteredLaunch();
   } else {
     // for distributed system
+    dotenv.config();
     await startGraphQL();
   }
 }

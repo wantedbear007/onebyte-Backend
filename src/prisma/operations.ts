@@ -1,6 +1,7 @@
 import { v4 as uniqueId } from "uuid";
-import { Prisma } from "@prisma/client";
+import { Prisma,  } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 // user defined
 import { prismaInstance } from "../index";
@@ -10,7 +11,6 @@ import {
 } from "../graphql/models/userModel";
 import { jwt_secret, profilePictureUrl } from "../utils/constants";
 import { noteModel } from "../graphql/models/noteModel";
-import { noteServiceResponse } from "../services/notesServices";
 
 // error responses
 export enum DatabaseResponse {
@@ -36,7 +36,7 @@ export default class DatabaseOperations {
       });
       return DatabaseResponse.operationSuccess;
     } catch (err: any) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err instanceof PrismaClientKnownRequestError) {
         if (err.code == "P2002") {
           return DatabaseResponse.alreadyRegistered;
         }
@@ -166,7 +166,7 @@ export default class DatabaseOperations {
             throw new Error("hello");
           }
 
-          allUserNotes = res.notes.map((note) => ({
+          allUserNotes = res.notes.map((note: noteModel) => ({
             id: note.id,
             title: note.title,
             body: note.body,
