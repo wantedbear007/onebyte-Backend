@@ -12,14 +12,3 @@ export interface noteModel {
   authorId?: string;
   backgroundColor?: string;
 }
-
-export interface tempNoteModel {
-  id: number;
-  title: string;
-  body: string;
-  createdAt: Date;
-  updatedAt: Date;
-  backgroundColor: string;
-
-  authorId: string;
-}

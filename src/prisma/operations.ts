@@ -9,7 +9,7 @@ import {
   userRegistrationModel,
 } from "../graphql/models/userModel";
 import { jwt_secret, profilePictureUrl } from "../utils/constants";
-import { noteModel, tempNoteModel } from "../graphql/models/noteModel";
+import { noteModel } from "../graphql/models/noteModel";
 import { noteServiceResponse } from "../services/notesServices";
 
 // error responses
@@ -183,6 +183,23 @@ export default class DatabaseOperations {
     } finally {
       prismaInstance.$disconnect();
       return allUserNotes;
+    }
+  }
+
+  // delete note
+  static async deleteNote(noteId: number): Promise<DatabaseResponse> {
+    try {
+      await prismaInstance.note.delete({
+        where: {
+          id: noteId,
+        },
+      });
+
+      return DatabaseResponse.operationSuccess;
+    } catch (err: any) {
+      return DatabaseResponse.operationFailed;
+    } finally {
+      prismaInstance.$disconnect();
     }
   }
 }

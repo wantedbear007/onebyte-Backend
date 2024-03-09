@@ -78,9 +78,17 @@ export const mutationsResolvers = {
     context: any,
     info: any,
   ) => {
-    console.log("inside get notes in mutation resolvers !");
     const res: noteServiceResponse = await NoteServices.getNotes(args.token);
-    console.log(res);
     return res;
+  },
+
+  // endpoint to delete note
+  deleteNote: async (
+    parent: any,
+    args: { token: string; noteId: number },
+    context: any,
+    info: any,
+  ) => {
+    return await NoteServices.deleteNote(args.token, args.noteId);
   },
 };

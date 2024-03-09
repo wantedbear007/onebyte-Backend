@@ -17,6 +17,7 @@ type verifyUserResponse {
 }
 
 type note {
+  id: Int,
   title: String!,
   body: String!,
   # change String to date
@@ -61,6 +62,9 @@ type Mutation {
   getNotes (
     token: String!
   ): userNotes 
+
+  # to delete note
+  deleteNote (token: String!, noteId: Int!): userResponse
 
 }
 

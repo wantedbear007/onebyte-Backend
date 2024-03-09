@@ -83,6 +83,43 @@ class NoteServices {
       return response;
     }
   }
+
+  // to delete note
+  static async deleteNote(
+    token: string,
+    noteId: number,
+  ): Promise<noteServiceResponse> {
+    const response: noteServiceResponse = {
+      message: "note deleted !",
+    };
+
+    try {
+      const res: DatabaseResponse = await DatabaseOperations.verifyUser(token);
+      if (res === DatabaseResponse.tokenVerified) {
+        const databaseResponse: DatabaseResponse =
+          await DatabaseOperations.deleteNote(noteId);
+        if (databaseResponse != DatabaseResponse.operationSuccess) {
+          throw new Error("note doesn't exist");
+        }
+        response.statusCode = responseCodes.authenticated;
+      } else if (res === DatabaseResponse.tokenExpired) {
+        throw new jwt.TokenExpiredError("Token expired ", new Date());
+      } else {
+        response.message = "Internal error";
+        response.statusCode = responseCodes.internalError;
+      }
+    } catch (err: any) {
+      if (err instanceof jwt.TokenExpiredError) {
+        response.message = err.message;
+        response.statusCode = responseCodes.unauthorized;
+      } else {
+        response.message = err.message;
+        response.statusCode = responseCodes.unauthorized;
+      }
+    } finally {
+      return response;
+    }
+  }
 }
 
 export default NoteServices;

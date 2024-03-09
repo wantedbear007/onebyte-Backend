@@ -8,7 +8,7 @@ import distributedServerLaunch from "./services/distributedLoad";
 import { startGraphQL } from "./graphql/index";
 dotenv.config();
 
-export const prismaInstance = new PrismaClient({ log: ["info", "query"] });
+export const prismaInstance = new PrismaClient({});
 
 async function startServers(): Promise<void> {
   // for single service
