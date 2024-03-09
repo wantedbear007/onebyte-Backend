@@ -31,6 +31,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=4000
+      - DATABASE_URL="postgresql://root:root@onedata:5432/sample"
     ports:
       - "4000:4000"
     networks:
