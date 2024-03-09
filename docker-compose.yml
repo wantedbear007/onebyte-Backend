@@ -1,15 +1,5 @@
 version: "3.8"
 services:
-  onebyte:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - PORT=4000
-    ports:
-      - "4000:4000"
-    networks:
-      - one
   db:
     container_name: onedata
     image: postgres
@@ -34,6 +24,17 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
+
+  onebyte:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=4000
+    ports:
+      - "4000:4000"
+    networks:
+      - one
 volumes:
   postgre:
 
