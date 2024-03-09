@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "b6704f6c-c347-49a3-8a48-c97fdc7cab06",
+		"name": "onebyte-rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20824281"
+	},
+	"item": [
+		{
+			"name": "createAccount",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\": \"mutation { registerUser(name: \\\"John Doe\\\", email: \\\"john.doe@example.com\\\", username: \\\"johndoe\\\", bio: \\\"Lorem ipsum dolor sit amet\\\", profileUrl: \\\"http://example.com/profile\\\", password: \\\"your_password_here\\\") { statusCode message }}\"}"
+				},
+				"url": {
+					"raw": "http://localhost:4000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\": \"mutation { createNote(token: \\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZmZHNmZHNmIiwiaWF0IjoxNzA5OTkwNTA5fQ._ohSNEvYhp8daV-hm6vTA3AqtG257PBVCB-dLFESB04\\\", title: \\\"Your Note Title\\\", body: \\\"Your note body content\\\", background: \\\"#FFFFFF\\\") { statusCode message }}\"}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\": \"mutation { loginUser(username: \\\"ffdsfdsf\\\", password: \\\"sddsgdfffdgfdfdg\\\") { statusCode message token }}\"}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

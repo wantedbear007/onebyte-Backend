@@ -1,0 +1,88 @@
+{
+	"id": "1d4c03c6-d3f7-4864-b066-24de49bca344",
+	"name": "onebyte-rest",
+	"timestamp": "2024-03-09T14:41:23.475Z",
+	"collection_id": "20824281-b6704f6c-c347-49a3-8a48-c97fdc7cab06",
+	"folder_id": 0,
+	"environment_id": "20824281-dee5cd6d-9342-45e9-9153-66aeee3ff4bf",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-03-09T14:41:22.797Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "0f99c62c-b4a1-4198-aaf7-120e06782d11",
+			"name": "createAccount",
+			"url": "http://localhost:4000",
+			"time": 128,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				128
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "73d9f777-799f-4e68-8948-8c022a03e351",
+			"name": "createNote",
+			"url": "http://localhost:4000/",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				12
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "f1494be5-c15d-42ff-b135-cf6343ebc17a",
+			"name": "loginUser",
+			"url": "http://localhost:4000/graphql",
+			"time": 94,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				94
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 234,
+	"collection": {
+		"requests": [
+			{
+				"id": "0f99c62c-b4a1-4198-aaf7-120e06782d11",
+				"method": "POST"
+			},
+			{
+				"id": "73d9f777-799f-4e68-8948-8c022a03e351",
+				"method": "POST"
+			},
+			{
+				"id": "f1494be5-c15d-42ff-b135-cf6343ebc17a",
+				"method": "POST"
+			}
+		]
+	}
+}
