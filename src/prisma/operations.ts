@@ -1,5 +1,5 @@
 import { v4 as uniqueId } from "uuid";
-import { Prisma,  } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
@@ -24,7 +24,7 @@ export enum DatabaseResponse {
 export default class DatabaseOperations {
   // user registration
   static async registerUser(
-    userDetails: userRegistrationModel,
+    userDetails: userRegistrationModel
   ): Promise<DatabaseResponse> {
     try {
       const res = await prismaInstance.user.create({
@@ -109,7 +109,7 @@ export default class DatabaseOperations {
   // create note
   static async createNote(
     args: noteModel,
-    username: string,
+    username: string
   ): Promise<DatabaseResponse> {
     const { title, body, color } = args;
     try {

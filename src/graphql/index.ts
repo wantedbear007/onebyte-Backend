@@ -27,5 +27,5 @@ export async function startGraphQL(): Promise<void> {
     listen: { port: +port },
   });
 
-  console.log(url);
+  console.log("services started at: ", url);
 }
