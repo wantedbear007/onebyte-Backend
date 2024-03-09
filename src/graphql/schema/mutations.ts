@@ -1,36 +1,4 @@
 const mutations = `#graphql
-type userLoginResponse {
-  statusCode: Int
-  message: String
-  token: String
-}
-
-type userResponse {
-  statusCode: Int
-  message: String
-}
-
-type verifyUserResponse {
-  statusCode: Int!,
-  message: String!,
-  token: String!
-}
-
-type note {
-  id: Int,
-  title: String!,
-  body: String!,
-  # change String to date
-  createdAt: String,
-  updatedAt: String,
-  backgroundColor: String
-}
-
-type userNotes {
-  message: String!,
-  statusCode: Int,
-  notes: [note]
-}
 
 type Mutation {
 
@@ -66,9 +34,12 @@ type Mutation {
   # to delete note
   deleteNote (token: String!, noteId: Int!): userResponse
 
+
+  # to add
+  # edit notes, delete users, search notes
+
 }
 
 `;
 
-// implement update user module
 export default mutations;
